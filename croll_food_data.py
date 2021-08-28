@@ -16,7 +16,7 @@ ruaz = Start
 while ruaz < End:
     ex_ruaz = ruaz
     try:
-        time.sleep(0.5)
+        time.sleep(2)
         html = driver.page_source  # 페이지의 elements모두 가져오기
         #soup = BeautifulSoup(html, 'html.parser')
         table = driver.find_element_by_id('tbl_prd_list')
@@ -24,13 +24,13 @@ while ruaz < End:
         rows = tbody.find_elements_by_tag_name("tr")
         page_num = int(driver.find_element_by_id(
             "s_page_num").get_attribute("value"))
-        print(page_num)
+        # print(page_num)
         for index, value in enumerate(rows):
             product_shelf_life = value.find_elements_by_tag_name("td")[4]
             product_name = value.find_elements_by_tag_name("td")[5]
             sickpoom_dic[product_name.text] = product_shelf_life.text
-            print(product_name.text, product_shelf_life.text)
-            print(ruaz, len(sickpoom_dic))
+            # print(product_name.text, product_shelf_life.text)
+            # print(ruaz, len(sickpoom_dic))
         if ruaz == page_num:
             if(ruaz <= 3 or ruaz >= 135979):
                 driver.find_element_by_xpath(
