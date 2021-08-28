@@ -3,17 +3,20 @@ import re
 import time
 import pickle
 
-Start = 90001 #시작,끝페이지 설정~$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-End = 93000 #로딩이 다된다음 페이지를 바꿔준다 
+#시작,끝페이지 설정~$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+Start = 90001
+End = 93000
 
-driver = webdriver.Chrome(r"C:\\chromedriver.exe")#경로지정~$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+#경로지정~$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+driver = webdriver.Chrome(r"C:\\chromedriver.exe")
 url = "http://www.foodsafetykorea.go.kr/portal/specialinfo/searchInfoProduct.do?menu_grp=MENU_NEW04&menu_no=2815#page1"
 driver.get(url)
 driver.find_element_by_id('srchBtn').click()
 
+time.sleep(60)  # 중간부터할경우 딜레이
 sickpoom_dic = {}
 ruaz = Start
-while ruaz < End:
+while ruaz <= End:
     ex_ruaz = ruaz
     try:
         time.sleep(2)
@@ -24,13 +27,12 @@ while ruaz < End:
         rows = tbody.find_elements_by_tag_name("tr")
         page_num = int(driver.find_element_by_id(
             "s_page_num").get_attribute("value"))
-        # print(page_num)
         for index, value in enumerate(rows):
             product_shelf_life = value.find_elements_by_tag_name("td")[4]
             product_name = value.find_elements_by_tag_name("td")[5]
             sickpoom_dic[product_name.text] = product_shelf_life.text
             # print(product_name.text, product_shelf_life.text)
-            # print(ruaz, len(sickpoom_dic))
+            # print(ruaz, page_num)
         if ruaz == page_num:
             if(ruaz <= 3 or ruaz >= 135979):
                 driver.find_element_by_xpath(
@@ -72,6 +74,7 @@ regex.append(regex3)
 regex.append(regex3_0)
 
 keyList = sickpoom_dic.keys()  # 키 리스트 뽑기
+
 number_dict = {}
 bul = False
 for key in keyList:
@@ -84,10 +87,10 @@ for key in keyList:
     number_dict[key] = "null"
     bul = False
 
-with open('90001~93000.pkl', 'wb') as f: #저장할때 이름 바꿔주세요~$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+# 저장할때 이름 바꿔주세요~$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+with open('90001~93000.pkl', 'wb') as f:
     pickle.dump(number_dict, f)
 
-# with open('data_dict.pkl', 'rb') as f:
+# with open('90001~93000.pkl', 'rb') as f: #파일읽기
 #     mydict = pickle.load(f)
-
 # print(mydict)
