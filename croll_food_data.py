@@ -4,8 +4,8 @@ import time
 import pickle
 
 #시작,끝페이지 설정~$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-Start = 90001
-End = 93000
+Start = 93001
+End = 96000
 
 #경로지정~$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 driver = webdriver.Chrome(r"C:\\chromedriver.exe")
@@ -13,13 +13,16 @@ url = "http://www.foodsafetykorea.go.kr/portal/specialinfo/searchInfoProduct.do?
 driver.get(url)
 driver.find_element_by_id('srchBtn').click()
 
-time.sleep(60)  # 중간부터할경우 딜레이
+for i in range(60):
+    time.sleep(1)  # 중간부터할경우 60초 딜레이
+    print(i)
+
 sickpoom_dic = {}
 ruaz = Start
 while ruaz <= End:
     ex_ruaz = ruaz
     try:
-        time.sleep(2)
+        time.sleep(0.5)
         html = driver.page_source  # 페이지의 elements모두 가져오기
         #soup = BeautifulSoup(html, 'html.parser')
         table = driver.find_element_by_id('tbl_prd_list')
@@ -52,7 +55,7 @@ while ruaz <= End:
             ruaz -= 1
     except:
         ruaz = ex_ruaz
-        print('excpet')
+        #print('excpet')
 
 regex0 = re.compile(r'\d+개월')
 regex0_0 = re.compile(r'\d+ 개월')
@@ -88,9 +91,5 @@ for key in keyList:
     bul = False
 
 # 저장할때 이름 바꿔주세요~$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-with open('90001~93000.pkl', 'wb') as f:
+with open('93001~96000.pkl', 'wb') as f:
     pickle.dump(number_dict, f)
-
-# with open('90001~93000.pkl', 'rb') as f: #파일읽기
-#     mydict = pickle.load(f)
-# print(mydict)
