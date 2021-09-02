@@ -14,11 +14,12 @@ dic.update(dic2)
 dic.update(dic3)
 dic.update(dic4)
 
-dic_manual = {'깻잎':'4일', '포카칩':'5개월'}
+dic_manual = {'깻잎':'4일', '포카칩어니언맛':'5개월', '스프라이트':'1년', '매일우유특별기획저지방':'15일'}
 dic.update(dic_manual)
 
 with open('86000~96000.pkl', 'wb') as f: #저장~$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     pickle.dump(dic, f)
 
-print(dic['깻잎'])
+
+print(dic)
 

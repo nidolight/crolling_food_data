@@ -14,3 +14,5 @@ for key, value in mydict.items():
 with open('dict.pkl', 'wb') as f:
     pickle.dump(new_dic, f)
 
+print(new_dic)
+
